@@ -15,7 +15,6 @@ const AuthModal = () => {
   const router = useRouter();
   const { session } = useSessionContext();
   const { onClose, isOpen } = useAuthModal();
-  console.log(session);
 
   useEffect(() => {
     if (session) {
@@ -38,7 +37,7 @@ const AuthModal = () => {
     >
       <Auth
         supabaseClient={supabaseClient}
-        providers={["github"]}
+        providers={[]}
         magicLink
         theme="dark"
         appearance={{
@@ -52,8 +51,6 @@ const AuthModal = () => {
             },
           },
         }}
-        // theme="dark"
-        // redirectTo={`${window.location.origin}/`}
       />
     </Modal>
   );

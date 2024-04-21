@@ -1,6 +1,7 @@
 import { createContext, useContext } from "react";
 import { Subscription, UserDetails } from "@/types";
 import {
+  User,
   useSessionContext,
   useUser as useSupaUser,
 } from "@supabase/auth-helpers-react";
@@ -8,7 +9,7 @@ import { useState, useEffect } from "react";
 
 type UserContextType = {
   accessToken: string | null;
-  user: UserDetails | null;
+  user: User | null;
   isLoading: boolean;
   userDetails: UserDetails | null;
   subscription: Subscription | null;
@@ -70,11 +71,11 @@ export const MyUserContextProvider = (props: Props) => {
       setUserDetails(null);
       setSubscription(null);
     }
-  }, [user, isLoadingData]);
+  }, [user, isLoadingUser]);
 
   const value = {
     accessToken,
-    user: userDetails,
+    user,
     isLoading: isLoadingUser || isLoadingData,
     userDetails,
     subscription,
