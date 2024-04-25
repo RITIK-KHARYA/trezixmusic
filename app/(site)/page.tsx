@@ -1,6 +1,11 @@
 import Header from "@/components/Header";
 import ListItem from "@/components/ListItem";
-export default function Home() {
+import getSongs from "@/actions/getSongs";
+import PageContent from "./component/PageContent";
+
+export const revalidate = 0;
+export default async function Home() {
+  const songs = await getSongs();
   return (
     <div
       className="
@@ -30,6 +35,7 @@ export default function Home() {
           <h1 className="text-white text-2xl font-semibold">Newest Songs </h1>
         </div>
         <div>List of songs!</div>
+        <PageContent songs={songs} />
       </div>
     </div>
   );

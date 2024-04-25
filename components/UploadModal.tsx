@@ -10,17 +10,14 @@ import toast from "react-hot-toast";
 import { useUser } from "@/hooks/useUser";
 import { useRouter } from "next/navigation";
 import uniqid from "uniqid";
-import {
-  SupabaseClient,
-  useSupabaseClient,
-} from "@supabase/auth-helpers-react";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
 
 const UploadModal = () => {
   const [isLoading, setIsLoading] = useState(false);
   const UploadModal = useuploadModal();
   const { user } = useUser();
   const router = useRouter();
-  const supabaseclient = useSupabaseClient();
+  const supabaseClient = useSupabaseClient();
   const { register, handleSubmit, reset } = useForm<FieldValues>({
     defaultValues: {
       author: "",
@@ -49,9 +46,9 @@ const UploadModal = () => {
       }
       const uniqueID = uniqid();
 
-      const { data: songData, error: songError } = await supabaseclient.storage
+      const { data: songData, error: songError } = await supabaseClient.storage
         .from("songs")
-        .upload("song-${values.title}-${uniqueID}.mp3", songFile, {
+        .upload(`song-${values.title}-${uniqueID}.mp3`, songFile, {
           cacheControl: "3600",
           upsert: false,
         });
@@ -60,9 +57,9 @@ const UploadModal = () => {
         return toast.error("failed to upload song");
       }
       const { data: imageData, error: imageError } =
-        await supabaseclient.storage
-          .from("songs")
-          .upload("image-${values.title}-${uniqueID}.mp3", imageFile, {
+        await supabaseClient.storage
+          .from("images")
+          .upload(`image-${values.title}-${uniqueID}.mp3`, imageFile, {
             cacheControl: "3600",
             upsert: false,
           });
@@ -71,14 +68,14 @@ const UploadModal = () => {
         return toast.error("failed to upload image");
       }
 
-      const { error: supabaseError } = await supabaseclient
+      const { error: supabaseError } = await supabaseClient
         .from("songs")
         .insert({
+          user_id: user.id,
           title: values.title,
           author: values.author,
           song_path: songData.path,
           image_path: imageData.path,
-          user_id: user.id,
         });
       if (supabaseError) {
         setIsLoading(false);
@@ -137,7 +134,9 @@ const UploadModal = () => {
             placeholder="image"
           />
         </div>
-        <Button disabled={isLoading}>Create</Button>
+        <Button type="submit" disabled={isLoading}>
+          Create
+        </Button>
       </form>
     </Modal>
   );
