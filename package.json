@@ -10,11 +10,14 @@
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-slider": "^1.1.2",
     "@supabase/auth-helpers-nextjs": "^0.10.0",
     "@supabase/auth-helpers-react": "^0.5.0",
     "@supabase/auth-ui-react": "^0.4.7",
     "@supabase/auth-ui-shared": "^0.1.8",
     "@supabase/ssr": "^0.3.0",
+    "@types/howler": "^2.2.11",
+    "howler": "^2.2.4",
     "next": "14.2.0",
     "query-string": "^9.0.0",
     "react": "^18",
@@ -25,6 +28,7 @@
     "stripe": "^15.3.0",
     "tailwind-merge": "^2.2.2",
     "uniqid": "^5.4.0",
+    "use-sound": "^4.0.1",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
